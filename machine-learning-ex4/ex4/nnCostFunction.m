@@ -91,8 +91,15 @@ Theta2NoBias = Theta2(:, 2:end);
 d3 = a3 - y;
 d2 = (d3 * Theta2NoBias) .* sigmoidGradient(z2);
 
-Theta1_grad = (d2' * X) / m;
-Theta2_grad = (d3' * a2) / m;
+% Create tweaked thetas that nil out the first columns
+Temp_Theta1 = Theta1;
+Temp_Theta1(:,1) = zeros(size(Theta1,1),1);
+Temp_Theta2 = Theta2;
+Temp_Theta2(:,1) = zeros(size(Theta2,1),1);
+
+% Compute the regularized gradients
+Theta1_grad = (d2' * X) / m + ((lambda / m) * Temp_Theta1);
+Theta2_grad = (d3' * a2) / m + ((lambda / m) * Temp_Theta2);
 
 % =========================================================================
 
