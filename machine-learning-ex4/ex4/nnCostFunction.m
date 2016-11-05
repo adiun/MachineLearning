@@ -62,11 +62,21 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+X = [ones(size(X,1), 1), X];
+z2 = X * Theta1';
+a2 = sigmoid(z2);
 
+a2 = [ones(size(a2,1), 1), a2];
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
 
+hx = a3;
 
-
-
+% convert y to a matrix representing k-dimensional vectors where k = num_labels
+y = eye(num_labels)(y,:);
+% first sum: sum the cost of all the columns (which represent the labels)
+% second sum: sum across all the training examples
+J = (1/m) * sum(sum((-y .* log(hx)) - ((1 - y) .* log(1 - hx)), 2), 1);
 
 
 
