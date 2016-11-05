@@ -83,7 +83,16 @@ Theta1SquaredNoBias = (Theta1 .* Theta1)(:, 2:end);
 Theta2SquaredNoBias = (Theta2 .* Theta2)(:, 2:end);
 J += (lambda / (2*m)) * (sum(sum(Theta1SquaredNoBias, 2), 1) + sum(sum(Theta2SquaredNoBias, 2), 1));
 
-% -------------------------------------------------------------
+% backpropagation
+% l = index of layer
+% j = index of node in layer l
+% i = index of training example
+Theta2NoBias = Theta2(:, 2:end);
+d3 = a3 - y;
+d2 = (d3 * Theta2NoBias) .* sigmoidGradient(z2);
+
+Theta1_grad = (d2' * X) / m;
+Theta2_grad = (d3' * a2) / m;
 
 % =========================================================================
 
