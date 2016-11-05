@@ -78,17 +78,10 @@ y = eye(num_labels)(y,:);
 % second sum: sum across all the training examples
 J = (1/m) * sum(sum((-y .* log(hx)) - ((1 - y) .* log(1 - hx)), 2), 1);
 
-
-
-
-
-
-
-
-
-
-
-
+% regularization, not taking into account the bias terms
+Theta1SquaredNoBias = (Theta1 .* Theta1)(:, 2:end);
+Theta2SquaredNoBias = (Theta2 .* Theta2)(:, 2:end);
+J += (lambda / (2*m)) * (sum(sum(Theta1SquaredNoBias, 2), 1) + sum(sum(Theta2SquaredNoBias, 2), 1));
 
 % -------------------------------------------------------------
 
