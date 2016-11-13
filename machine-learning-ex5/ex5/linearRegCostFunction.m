@@ -20,11 +20,15 @@ grad = zeros(size(theta));
 %
 
 hx = X * theta;
-diff = (hx .- y) .^ 2;
+diff = (hx - y) .^ 2;
 nonreg = (1 / (2*m)) * sum(diff);
 thetaForReg = theta;
 thetaForReg(1) = 0;
 J = nonreg + ((lambda / (2*m)) * (sum(thetaForReg.^2)));
+
+grad_nonreg = (1 / m) * sum((hx - y) .* X);
+grad = grad_nonreg + ((lambda / m) * thetaForReg');
+
 
 % =========================================================================
 
