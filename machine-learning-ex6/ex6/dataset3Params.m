@@ -23,9 +23,26 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+CArr = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
+sigmaArr = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
+lowestError = intmax('int32');
+for c = 1:size(CArr,1)
+    Ctest = CArr(c);
+    for s = 1:size(sigmaArr,1)
+        sigmaTest = sigmaArr(s);
+        model = svmTrain(X, y, Ctest, @(x1, x2) gaussianKernel(x1, x2, sigmaTest));
+        predictions = svmPredict(model, Xval);
+        error = mean(double(predictions ~= yval));
+        if error < lowestError
+            lowestError = error;
+            C = Ctest;
+            sigma = sigmaTest;
+        end
+    end
+end
 
-
-
+C
+sigma
 
 
 
