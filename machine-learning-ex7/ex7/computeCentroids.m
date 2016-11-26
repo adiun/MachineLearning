@@ -25,8 +25,18 @@ centroids = zeros(K, n);
 %
 % Note: You can use a for-loop over the centroids to compute this.
 %
+for k = 1:K
+    examplesForCentroid = zeros(0, n);
+    for i = 1:size(idx,1)
+        if idx(i) == k
+            examplesForCentroid = [examplesForCentroid; X(i,:)];
+        end
+    end
 
-
+    numExamples = size(examplesForCentroid,1);
+    exampleSum = sum(examplesForCentroid);
+    centroids(k,:) = (1 / numExamples) .* exampleSum;
+end
 
 
 
