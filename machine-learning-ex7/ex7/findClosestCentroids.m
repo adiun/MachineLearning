@@ -21,11 +21,21 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
-
-
-
-
-
+for i = 1:size(X,1)
+    minDistortion = intmax();
+    for j = 1:K
+        % calculate the diff (1xn matrix - 1xn matrix) which results in another 1xn matrix
+        diff = X(i,:) - centroids(j,:);
+        % the magnitude of the 1xn matrix/vector is the sqrt of the sum of each squared component sqrt(a^2 + b^2).
+        % since we square the magnitude in the projection error formula, it is just a^2 + b^2.
+        % we can calculate this by multiplying the matrix with the transpose of itself
+        testDistortion = diff*diff';
+        if testDistortion < minDistortion
+            minDistortion = testDistortion;
+            idx(i) = j;
+        end
+    end
+end
 
 % =============================================================
 
