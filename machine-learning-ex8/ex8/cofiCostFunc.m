@@ -42,8 +42,10 @@ Theta_grad = zeros(size(Theta));
 
 Junreg = (1/2) * sum(sum((R .* ((X*Theta') - Y)).^2)); 
 J = Junreg + (lambda / 2) * sum(sum(Theta.^2)) + (lambda / 2) * sum(sum(X.^2));
-X_grad = (R .* ((X*Theta') - Y)) * Theta;
-Theta_grad = (R .* (((X*Theta')) - Y))' * X;
+X_grad_unreg = (R .* ((X*Theta') - Y)) * Theta;
+X_grad = X_grad_unreg + (lambda * X);
+Theta_grad_unreg = (R .* (((X*Theta')) - Y))' * X;
+Theta_grad = Theta_grad_unreg + (lambda * Theta);
 
 % =============================================================
 
